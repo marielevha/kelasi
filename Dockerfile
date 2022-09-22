@@ -1,8 +1,8 @@
 FROM php:7.4-fpm-alpine
 
-RUN apk add --no-cache nginx supervisord wget
+RUN apk add --no-cache nginx supervisor wget
 
-RUN mdkir -p /run/nginx
+RUN mkdir -p /run/nginx
 
 COPY docker/nginx.conf /etc/nginx/nginx.conf
 
