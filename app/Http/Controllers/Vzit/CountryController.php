@@ -4,158 +4,157 @@ namespace App\Http\Controllers\Vzit;
 
 use App\Http\Controllers\Controller;
 use App\Models\Vzit\Country;
-use App\Models\Series;
+use App\Services\CountryService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\Support\Facades\Request;
-use Inertia\Inertia;
-use Inertia\Response;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Str;
 
 class CountryController extends Controller
 {
+    /**
+     * @var CountryService
+     */
+    private $countryService;
+
     public function __construct()
     {
-        $this->middleware(['permission:country.read'], ['only' => ['index']]);
-        $this->middleware(['permission:country.write'], [
-            'only' => ['create', 'store', 'edit', 'update']
-        ]);
-        $this->middleware(['permission:country.delete'], ['only' => 'destroy']);
-        $this->middleware(['permission:country.restore'], ['only' => 'restore']);
+        #Config ACL
+        $this->middleware(['role:admin|super-admin'], ['only' => ['index']]);
+        $this->middleware(['role:admin|super-admin'], ['only' => ['create', 'store']]);
+        $this->middleware(['role:admin|super-admin'], ['only' => ['edit', 'update']]);
+
+        #Initialize user service
+        $this->countryService = new CountryService();
     }
-    /**
-     * Display a listing of the resource.
-     *
-     * @return Response
-     */
+
     public function index()
     {
-        $data = [
-            'filters' => Request::all('search', 'trashed'),
-            'countries' => Country::orderByName()
-                ->with('user')
-                ->withCount('cities')
-                ->filter(Request::only('search', 'trashed'))
-                ->paginate(10)
-                ->withQueryString()
-                ->through(fn ($country) => [
-                    'id' => $country->id,
-                    'name' => $country->name,
-                    'created_at' => $country->created_at,
-                    'deleted_at' => $country->deleted_at,
-                    'user' => $country->user ? $country->user->only('name') : null,
-                    'cities' => $country->cities_count
-                ]
-            )
-        ];
-        //dd($data);
-        return Inertia::render('VZIT/Countries/Index', $data);
+        $listOfCountries = $this->countryService->index();
+        $listOfDisabledCountries = $this->countryService->get_all_deleted_countries();
+
+        return view('administrator.country.index')
+            ->with('listOfCountries', $listOfCountries)
+            ->with('listOfDisabledCountries', $listOfDisabledCountries);
     }
 
     /**
-     * Show the form for creating a new resource.
-     *
      * @return Response
      */
     public function create()
     {
-        return Inertia::render('Series/Create');
+        return view('administrator.country.create');
     }
 
     /**
-     * Store a newly created resource in storage.
-     *
+     * @param Request $request
      * @return RedirectResponse
      */
-    public function store()
+    public function store(Request $request)
     {
-        Series::create(
-            Request::validate([
-                'title' => ['required', 'max:50'],
-                'description' => ['nullable', 'min:25', 'max:250'],
-                'activated' => ['required'],
-            ])
-        );
-        return Redirect::route('series')->with('success', 'Series created.');
-    }
+        $request->validate([
+            'name' => ['required', 'string', 'max:255', 'unique:countries'],
+        ]);
 
-    /**
-     * Display the specified resource.
-     *
-     * @param int $id
-     * @return void
-     */
-    public function show(int $id)
-    {
-        //
+        $response = $this->countryService->create_country($request);
+
+        if (!$response) {
+            /**
+             * Something Wrong - 400 - 401
+             */
+            return back()->with('error', trans('user.errors.something-wrong'));
+        }
+
+        /**
+         * Redirect to List of Countries
+         */
+        return redirect()
+            ->route('country.index')
+            ->with('info', trans('country.info.country-created', ['name' => $request->name]));
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Series $series
+     * @param int $slug
      * @return Response
      */
-    public function edit(Series $series)
+    public function edit($slug)
     {
-        $subjects = $series->subjects()
-            ->orderByTitle()
-            ->get()
-            ->map->only('id', 'title', 'activated', 'description');
-        $data = [
-            'serie' => [
-                'id' => $series->id,
-                'title' => $series->title,
-                'description' => $series->description,
-                'activated' => $series->activated,
-                'deleted_at' => $series->deleted_at,
-                'subjects_count' => count($series->subjects),
-                'subjects' => $subjects,
-            ]
-        ];
-        return Inertia::render('Series/Edit', $data);
+        $country = $this->countryService->get_by_slug($slug);
+        if (is_null($country)) {
+            return abort(404);
+        }
+
+        return view('administrator.country.create', [
+            'country' => $country,
+        ]);
     }
 
     /**
-     * Update the specified resource in storage.
-     *
-     * @param Series $series
-     * @return RedirectResponse
+     * @param Request $request
+     * @param string $slug
+     * @return Response
      */
-    public function update(Series $series)
+    public function update(Request $request, $slug)
     {
-        $series->update(
-            Request::validate([
-                'title' => ['required', 'max:50'],
-                'description' => ['nullable', 'min:25', 'max:250'],
-                'activated' => ['required'],
-            ])
-        );
-        return Redirect::back()->with('success', 'Series updated.');
+        $request->validate([
+            'name' => ['required', 'string', 'max:255'],
+        ]);
+        if (!$slug == Str::slug($request->name, '-')) {
+            $request->validate([
+                'name' => ['required', 'string', 'max:255', 'unique:countries'],
+            ]);
+        }
+
+        $country = $this->countryService->update_country_by_slug($slug, $request);
+        /**
+         * CREATE FLASH MESSAGES TO DISPLAY ERRORS IN CURRENT PAGE
+         */
+        if (!$country) {
+            return abort(404);
+        }
+
+        /**
+         * REDIRECT USER TO LOGOUT ROUTE
+         */
+        return redirect()->route('country.index')->with('info', trans('commercial-agencies.infos.agency-updated', ['name' => $request->name]));
     }
 
     /**
-     * Remove the specified resource from storage.
-     *
-     * @param Series $series
+     * @param Request $request
+     * @param string $slug
      * @return RedirectResponse
      */
-    public function destroy(Series $series)
+    public function disable_with_slug(Request $request, $slug)
     {
-        $series->delete();
+        $response = $this->countryService->disable_country_by_slug($slug);
+        if (!$response) {
+            /**
+             * CREATE FLASH MESSAGES TO DISPLAY ERRORS IN CURRENT PAGE
+             */
+            return redirect()->route('country.index')->with('error', trans('user.errors.something-wrong'));
+        }
 
-        return Redirect::back()->with('success', 'Series deleted.');
+        return redirect()->route('country.index')->with('info', trans('commercial-agencies.infos.agency-disabled-confirm', ['name' => $request->name]));
     }
 
     /**
-     * Restore the specified resource from storage.
-     *
-     * @param Series $series
+     * @param Request $request
+     * @param string $slug
      * @return RedirectResponse
      */
-    public function restore(Series $series)
+    public function enable_with_slug(Request $request, $slug)
     {
-        $series->restore();
+        $response = $this->countryService->enable_country_by_slug($slug);
+        if (!$response) {
+            /**
+             * CREATE FLASH MESSAGES TO DISPLAY ERRORS IN CURRENT PAGE
+             */
+            return redirect()->route('country.index')->with('error', trans('user.errors.something-wrong'));
+        }
 
-        return Redirect::back()->with('success', 'Series restored.');
+        return redirect()->route('country.index')->with('info', trans('commercial-agencies.infos.agency-enabled-confirm', ['name' => $request->name]));
     }
 }

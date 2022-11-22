@@ -43,11 +43,7 @@ class InitRolesAndPermissions extends Command
         $this->info('Database Begin: init roles an permissions');
         $actions = ['read', 'write', 'delete', 'restore', 'import', 'export'];
         $models = [
-            'user', 'series', 'subject',
-            'level', 'document', 'chapter',
-            'preference', 'config', 'attachment',
-
-            'city', 'country', 'event', 'post', 'category'
+            'user', 'city', 'country', 'event', 'post', 'category'
         ];
 
         $advanced_user_permissions = [
@@ -87,15 +83,16 @@ class InitRolesAndPermissions extends Command
             foreach ($models as $model) {
                 foreach ($actions as $action) {
                     Permission::create(['name' => "$model.$action"]);
-                    //$this->info("Create permission: ``$model.$action``");
                     $i++;
                     $progress1->advance();
                 }
             }
         }
-        Permission::create(['name' => "filemanager"]);
-        $progress1->advance();
-        //$this->info("Create permission: ``filemanager``");
+
+        foreach ($advanced_user_permissions as $permission) {
+            Permission::create(['name' => $permission]);
+        }
+
         $progress1->finish();
         $this->comment(' DONE. ' . PHP_EOL);
 
@@ -106,39 +103,27 @@ class InitRolesAndPermissions extends Command
         $progress2 = $this->output->createProgressBar(4);
         Role::create(['name' => env('PROFILE_VIEWER')])
             ->givePermissionTo([
-                'document.read', 'chapter.read',
-                'preference.read', 'preference.write',
+                'user.viewer.update',
+                'user.viewer.delete',
+                'user.viewer.read',
             ]);
         $progress2->advance();
-        //$this->info('Create role: ``' . env('PROFILE_VIEWER') . '``');
 
         Role::create(['name' => env('PROFILE_ENTERPRISE')])
             ->givePermissionTo([
-                'filemanager',
-                'document.read', 'document.write', 'document.delete', 'document.restore',
-                'chapter.read', 'chapter.write', 'chapter.delete', 'chapter.restore',
+                'user.enterprise.update',
+                'user.enterprise.delete',
+                'user.enterprise.read',
             ]);
         $progress2->advance();
-        //$this->info('Create role: ``' . env('PROFILE_ENTERPRISE') . '``');
-
-        /*Role::create(['name' => env('PROFILE_ENTERPRISE')])
-            ->givePermissionTo(['filemanager', 'document.read', 'chapter.read']);
-        $progress2->advance();
-        //$this->info('Create role: ``' . env('PROFILE_ENTERPRISE') . '``');*/
 
         Role::create(['name' => env('PROFILE_ADMIN')])
-            ->givePermissionTo([
-                'document.read', 'document.write', 'document.delete', 'document.restore',
-                'chapter.read', 'chapter.write', 'chapter.delete', 'chapter.restore',
-                'user.read', 'user.write', 'user.delete', 'filemanager',
-            ]);
+            ->givePermissionTo($advanced_user_permissions);
         $progress2->advance();
-        //$this->info('Create role: ``' . env('PROFILE_ADMIN') . '``');
 
         Role::create(['name' => env('PROFILE_SUPER_ADMIN')])
             ->syncPermissions(Permission::all());
         $progress2->advance();
-        //$this->info('Create role: ``' . env('PROFILE_SUPER_ADMIN') . '``');
         $progress2->finish();
         $this->comment(' DONE. ' . PHP_EOL);
 
@@ -149,19 +134,29 @@ class InitRolesAndPermissions extends Command
         $progress3 = $this->output->createProgressBar(4);
         User::find(1)->assignRole(env('PROFILE_SUPER_ADMIN'));
         $progress3->advance();
-        $this->info(' Assign role: Assign ``' . env('PROFILE_SUPER_ADMIN') . '`` role to ' . User::find(1)->name);
+        $this->info(' Assign role: Assign ``' . env('PROFILE_SUPER_ADMIN') . '`` role to ' . User::find(1)->first_name);
 
         User::find(2)->assignRole(env('PROFILE_ADMIN'));
         $progress3->advance();
-        $this->info(' Assign role: Assign ``' . env('PROFILE_ADMIN') . '`` role to ' . User::find(2)->name);
+        $this->info(' Assign role: Assign ``' . env('PROFILE_ADMIN') . '`` role to ' . User::find(2)->first_name);
 
         User::find(3)->assignRole(env('PROFILE_VIEWER'));
         $progress3->advance();
-        $this->info(' Assign role: Assign ``' . env('PROFILE_VIEWER') . '`` role to ' . User::find(3)->name);
+        $this->info(' Assign role: Assign ``' . env('PROFILE_VIEWER') . '`` role to ' . User::find(3)->first_name);
 
         User::find(4)->assignRole(env('PROFILE_VIEWER'));
         $progress3->advance();
-        $this->info(' Assign role: Assign ``' . env('PROFILE_VIEWER') . '`` role to ' . User::find(4)->name);
+        $this->info(' Assign role: Assign ``' . env('PROFILE_VIEWER') . '`` role to ' . User::find(4)->first_name);
+
+        User::find(5)->assignRole(env('PROFILE_ENTERPRISE'));
+        $progress3->advance();
+        $this->info(' Assign role: Assign ``' . env('PROFILE_ENTERPRISE') . '`` role to ' . User::find(5)->first_name);
+
+        User::find(6)->assignRole(env('PROFILE_ENTERPRISE'));
+        $progress3->advance();
+        $this->info(' Assign role: Assign ``' . env('PROFILE_ENTERPRISE') . '`` role to ' . User::find(6)->first_name);
+
+
         $progress3->finish();
         $this->comment('DONE. ' . PHP_EOL);
 

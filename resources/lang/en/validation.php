@@ -158,6 +158,51 @@ return [
     |
     */
 
-    'attributes' => [],
+    'attributes' => [
+        'email-placeholder' => 'Enter a valid email',
+        'password-placeholder' => 'Enter a valid password',
+        'password-confirm-placeholder' => 'Re-enter valid password',
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
+    | Personal Validation Messages
+    |--------------------------------------------------------------------------
+    */
+
+    'title-pattern-password' => '
+        At least <code>one digit</code>.
+        At least <code>one lowercase character</code>.
+        At least <code>one uppercase character</code>.
+        At least <code>one special character</code>.
+        At least <code>8 characters</code> in length, but no <code>more than 32</code>.
+    ',
+
+    'title-pattern-email' => 'Please enter an email in a valid format : <code class="font-size-sm">example@example.com</code>',
+    'title-pattern-phone' => 'Please enter an phone number in a valid format : <code class="font-size-sm">+212000000000</code>',
+
+    'placeholder-title-pattern-password' => '
+        At least one digit.
+        At least one lowercase character.
+        At least one uppercase character.
+        At least one special character.
+        At least 8 characters in length, but no more than 32.
+    ',
+    'placeholder-title-pattern-email' => 'Please enter an email in a valid format : example@example.com',
+    'placeholder-title-pattern-phone' => 'Please enter an phone number in a valid format : +212000000000',
+    'placeholder-title-pattern-region' => 'Please select a region',
+
+    'something_went_wrong' => 'Whoops! Something went wrong.',
+
+    'subtitle-email-readonly' => 'Email is information that you can <code class="font-size-sm">only read</code> and <code class="font-size-sm">not modify</code>.',
+    'subtitle-profile-readonly' => 'Profile is information that you can <code class="font-size-sm">only read</code> and <code class="font-size-sm">not modify</code>.',
+    'subtitle-created-at-readonly' => 'This is the creation date of the current member. It is not editable.',
+
+    'are-you-sure' => 'Are you sure you want to deactivate user :email ?',
+    'are-you-sure-bank' => 'Are you sure you want to deactivate this Bank ?',
+    'are-you-sure-activate' => 'Are you sure you want to activate user :email ?',
+    'are-you-sure-enable' => 'Are you sure you want to enable user :email ?',
+    'are-you-sure-continue' => 'Are you sure you want to continue ? If Yes, you will be disconnected from your session.',
+    'are-you-sure-password' => 'Are you sure you want to continue ? If Yes, A reset password email will be sent to user :email',
 
 ];

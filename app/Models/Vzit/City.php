@@ -5,10 +5,11 @@ namespace App\Models\Vzit;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class City extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'name',
@@ -23,9 +24,10 @@ class City extends Model
         return $this->belongsTo(Event::class);
     }
 
-    public function pays()
+    public function country()
     {
-        return $this->belongsTo(Country::class);
+        return $this->belongsTo(Country::class)->withTrashed();
+            //->where('deleted_at', null)->orWhere('deleted_at','<>', null);
     }
 
     public function posts()
