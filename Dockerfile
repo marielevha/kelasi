@@ -5,7 +5,7 @@ FROM php:7.4-fpm-alpine
 RUN apk add --no-cache nginx supervisor wget
 
 #Install php extension
-RUN apk install php-cli php-fpm php-json php-common php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath php-pgsql
+RUN apk add php-cli php-fpm php-json php-common php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath php-pgsql
 
 
 RUN mkdir -p /run/nginx
