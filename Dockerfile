@@ -4,6 +4,10 @@ FROM php:7.4-fpm-alpine
 
 RUN apk add --no-cache nginx supervisor wget
 
+#Install php extension
+RUN apk install php-cli php-fpm php-json php-common php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath php-pgsql
+
+
 RUN mkdir -p /run/nginx
 
 COPY docker/nginx.conf /etc/nginx/nginx.conf
@@ -16,7 +20,5 @@ RUN cd /app && /usr/local/bin/composer install --no-dev
 RUN cd /app && /usr/local/bin/composer dump-autoload
 
 RUN chown -R www-data: /app
-
-RUN apt-get update
 
 CMD sh /app/docker/startup.sh
