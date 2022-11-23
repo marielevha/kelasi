@@ -6,6 +6,7 @@ RUN apk add --no-cache nginx supervisor wget
 
 #Install php extension
 RUN apk add php-pgsql php-cli php-fpm php-json php-common php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath
+RUN docker-php-ext-install mysqli pdo pdo_mysql pgsql pdo_pgsql
 
 RUN mkdir -p /run/nginx
 
