@@ -1,6 +1,7 @@
 FROM php:7.4-fpm-alpine
 
-RUN apt update && apt install php php-cli php-fpm php-json php-common php-mysql php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath php-pgsql
+RUN apt-get update
+#RUN apt update && apt install php php-cli php-fpm php-json php-common php-mysql php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath php-pgsql
 
 RUN apk add --no-cache nginx supervisor wget
 
