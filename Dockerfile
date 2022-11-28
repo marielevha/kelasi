@@ -11,7 +11,7 @@ RUN apk add php-pgsql php-cli php-fpm php-json php-common php-zip php-gd php-mbs
 RUN set -ex && apk --no-cache add postgresql-dev
 #RUN docker-php-ext-install pdo pdo_pgsql
 # Install PHP extensions
-RUN docker-php-ext-install pdo_mysql
+RUN docker-php-ext-install pdo_mysql pdo_pgsql
 
 RUN mkdir -p /run/nginx
 
