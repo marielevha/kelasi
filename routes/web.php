@@ -14,7 +14,8 @@ require __DIR__ . '/vzit/viewer.php';
 
 
 Route::get('/', function () {
-    return view('welcome');
+    return redirect('dashboard');
+    //return view('welcome');
 });
 
 /*Route::get('/dashboard', function () {

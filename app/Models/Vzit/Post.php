@@ -5,10 +5,11 @@ namespace App\Models\Vzit;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Post extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
         'title',
@@ -33,12 +34,27 @@ class Post extends Model
 
     public function tags()
     {
-        return $this->belongsTo(Tag::class);
+        return $this->belongsToMany(Tag::class);
     }
 
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    public function likes()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function comments()
+    {
+        return $this->belongsToMany(Tag::class);
+    }
+
+    public function rate()
+    {
+        return $this->belongsToMany(Tag::class);
     }
 
     /*public function images()

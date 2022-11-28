@@ -4,22 +4,24 @@ namespace App\Models\Vzit;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Tag extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     protected $fillable = [
-        'name'
+        'name',
+        'slug',
     ];
 
     public function events()
     {
-        return $this->belongsTo(Event::class);
+        return $this->belongsToMany(Event::class);
     }
 
     public function posts()
     {
-        return $this->belongsTo(Post::class);
+        return $this->belongsToMany(Post::class);
     }
 }

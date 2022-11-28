@@ -5,7 +5,7 @@
     <x-slot name="local_link">
 
         <!--begin::Page Custom Styles(used by this page)-->
-        <link href="https://preview.keenthemes.com/keen/theme/demo6/dist/assets/css/pages/login/login-1.css?v=2.1.1" rel="stylesheet" type="text/css" />
+        <link href="https://preview.keenthemes.com/keen-v2/theme/demo6/dist/assets/css/pages/login/login-1.css?v=2.1.1" rel="stylesheet" type="text/css" />
         <!--end::Page Custom Styles-->
 
     </x-slot>
@@ -13,7 +13,7 @@
     <x-slot name="local_script">
 
         <!--begin::Page Scripts(used by this page)-->
-        <script src="https://preview.keenthemes.com/keen/theme/demo6/dist/assets/js/pages/custom/login/login.js?v=2.1.1"></script>
+        <script src="https://preview.keenthemes.com/keen-v2/theme/demo6/dist/assets/js/pages/custom/login/login.js?v=2.1.1"></script>
         <!--end::Page Scripts-->
 
     </x-slot>
@@ -29,7 +29,7 @@
                 <div class="d-flex flex-column-auto flex-column pt-lg-40 pt-15">
                     <!--begin::Aside header-->
                     <a href="#" class="text-center mb-15">
-                        <img src="https://preview.keenthemes.com/keen/theme/demo6/dist/assets/media/logos/logo-5.svg"
+                        <img src="https://preview.keenthemes.com/keen-v2/theme/demo6/dist/assets/media/logos/logo-5.svg"
                             alt="logo" class="h-70px" />
                     </a>
                     <!--end::Aside header-->
@@ -42,7 +42,7 @@
                 <!--end::Aside Top-->
                 <!--begin::Aside Bottom-->
                 <div class="aside-img d-flex flex-row-fluid bgi-no-repeat bgi-position-y-bottom bgi-position-x-center"
-                    style="background-image: url(https://preview.keenthemes.com/keen/theme/demo6/dist/assets/media/svg/illustrations/payment.svg)">
+                    style="background-image: url(https://preview.keenthemes.com/keen-v2/theme/demo6/dist/assets/media/svg/illustrations/payment.svg)">
                 </div>
                 <!--end::Aside Bottom-->
             </div>

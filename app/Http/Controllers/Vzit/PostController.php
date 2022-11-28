@@ -32,9 +32,8 @@ class PostController extends Controller
 
         $listOfPosts = $this->postService->posts();
         $listOfDisabledTPosts = $this->postService->posts();
-        $listTotalOfPosts = array_merge($listOfPosts, $listOfDisabledTPosts);
+        $listTotalOfPosts = 2;//array_merge($listOfPosts, $listOfDisabledTPosts);
         $listOfDraftPosts = [];
-        $listOfPublishPosts = [];
         $listOfPublishPosts = [];
 
         $listOfTickets = [];
@@ -49,11 +48,15 @@ class PostController extends Controller
         $listOfClosedTickets = [];
 
         return view('administrator.post.index', [
+            'listOfPosts' => $listOfPosts,
+            'listOfDisabledTPosts' => $listOfDisabledTPosts,
+            'listTotalOfPosts' => $listTotalOfPosts,
+            'listOfDraftPosts' => $listOfDraftPosts,
+            'listOfPublishPosts' => $listOfPublishPosts,
+
             'listOfTickets' => $listOfTickets,
             'listOfDisabledTickets' => $listOfDisabledTickets,
-
             'listTotalOfTickets' => $listTotalOfTickets,
-
             'listOfNewTickets' => $listOfNewTickets,
             'listOfQueuedTickets' => $listOfQueuedTickets,
             'listOfInProgressTickets' => $listOfInProgressTickets,

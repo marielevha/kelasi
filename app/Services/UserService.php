@@ -10,6 +10,8 @@ namespace App\Services;
 
 
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Str;
 
 class UserService
 {
@@ -64,5 +66,31 @@ class UserService
     public function enable_user_by_email($email)
     {
         return User::withTrashed()->where('email', $email)->first()->restore();
+    }
+
+    public function edit_user_by_email($user, $data)
+    {
+        return null;
+    }
+
+    public function create_user($data)
+    {
+        $user = new User();
+        $user->first_name = $data->first_name;
+        $user->last_name = $data->last_name;
+        $user->email = $data->email;
+        $user->phone = $data->phone;
+        $user->profile = $data->profile;
+
+        $password = Str::random(8);
+        $user->password = Hash::make($password);
+        $this->send_generated_password($password);
+
+        return $user->save();
+    }
+
+    protected function send_generated_password($password)
+    {
+
     }
 }

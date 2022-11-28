@@ -18,6 +18,8 @@ return [
     'menu-pack' => 'Packs',
     'menu-event' => 'Events',
     'menu-post' => 'Posts',
+    'menu-category' => 'Categories',
+    'menu-tag' => 'Tags',
 
     'subtitle-updates-statistics' => 'Updates & Statitics',
 ];

@@ -568,7 +568,7 @@
                                                 type="text"
                                                 class="form-control form-control-lg form-control-solid"
                                                 disabled
-                                                value="{{ Carbon\Carbon::parse(intval(substr($city->createdAt, 0, 10)))->format("d/m/Y H:i") }}"
+                                                value="{{ $city->created_at->format("d/m/Y H:i") }}"
                                                 />
 
                                             <div class="input-group-append">

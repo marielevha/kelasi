@@ -1,4 +1,10 @@
 <?php
+/**
+ * Created by IntelliJ IDEA.
+ * User: maeva
+ * Date: 20/11/22
+ * Time: 04:40
+ */
 
 namespace App\Http\Controllers\Vzit;
 
@@ -9,6 +15,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use function Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Auth;
 
 class UserController extends Controller
 {
@@ -81,14 +88,8 @@ class UserController extends Controller
             'profile' => ['required', 'string', 'max:255'],
         ]);
 
-        $user = new User();
-        $user->first_name = $request->first_name;
-        $user->last_name = $request->last_name;
-        $user->email = $request->email;
-        $user->phone = $request->phone;
-        $user->profile = $request->profile;
+        $response = $this->userService->create_user($request);
 
-        $response = $user->save();
         if (!$response) {
             return back()->with('error', trans('user.errors.something-wrong'));
         }
@@ -201,5 +202,59 @@ class UserController extends Controller
         }
 
         return redirect()->route('user.index')->with('info', trans('user.infos.account-enabled-confirm', ['email' => $email]));
+    }
+
+    /**
+     * Access to Account Page with Current User
+     *
+     * @return Response
+     */
+    public function index_account()
+    {
+        return view('administrator.account.index');
+    }
+
+    /**
+     *  Edit Current User From Account Page
+     *
+     * @param Request $request
+     * @return RedirectResponse
+     */
+    public function update_account(Request $request)
+    {
+        switch (strtolower(auth()->user()->profile))
+        {
+            case env('PROFILE_ADMIN'):
+                $user = $this->userService->edit_user_by_email(auth()->user(), $request);
+                break;
+            case env('PROFILE_SUPER_ADMIN'):
+                $user = $this->userService->edit_user_by_email(auth()->user(), $request);
+                break;
+            case env('PROFILE_ENTERPRISE'):
+                $user = $this->userService->edit_user_by_email(auth()->user(), $request);
+                break;
+            case env('PROFILE_VIEWER'):
+                $user = $this->userService->edit_user_by_email(auth()->user(), $request);
+                break;
+            default:
+                /**
+                 * RETURN A FLASH MESSAGES TO DISPLAY BAD GET REQUEST
+                 * OR REDIRECT TO LOGIN
+                 */
+                return abort(404);
+        }
+
+        /**
+         * CREATE FLASH MESSAGES TO DISPLAY ERRORS IN CURRENT PAGE
+         */
+        if (is_null($user)) {
+            return abort(404);
+        }
+
+        /**
+         * REDIRECT USER TO LOGOUT ROUTE
+         */
+        Auth::guard('web')->logout();
+        return redirect('/');
     }
 }

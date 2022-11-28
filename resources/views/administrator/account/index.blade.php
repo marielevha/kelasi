@@ -19,21 +19,7 @@
     <x-slot name="header">
         <!--begin::Header Nav-->
         <ul class="menu-nav">
-            <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                <a href="{{ route('dashboard') }}" class="menu-link">
-                    <span class="menu-text">{{ __('account.dashboard') }}</span>
-                </a>
-            </li>
-            <li class="menu-item menu-item-active" aria-haspopup="true">
-                <a href="{{ route('user.index') }}" class="menu-link">
-                    <span class="menu-text">{{ __('account.users') }}</span>
-                </a>
-            </li>
-            <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                <a href="{{ route('audit.index') }}" class="menu-link">
-                    <span class="menu-text">{{ __('account.audit_trails') }}</span>
-                </a>
-            </li>
+            @include('components.header-administrator')
         </ul>
         <!--end::Header Nav-->
     </x-slot>

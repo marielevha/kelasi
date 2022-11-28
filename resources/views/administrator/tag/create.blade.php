@@ -1,10 +1,10 @@
-<x-dashboard-commercial>
+<x-dashboard-administrator>
 
 	<x-slot name="title">
-        @if(Route::currentRouteName() == 'bank.create')
-            {{ __('Add a New Bank') }}
-        @elseif(Route::currentRouteName() == 'bank.edit')
-            {{ __('Edit a Bank') }}
+        @if(Route::currentRouteName() == 'tag.create')
+            {{ __('Add a New Tag') }}
+        @elseif(Route::currentRouteName() == 'tag.edit')
+            {{ __('Edit a Tag') }}
         @endif
 	</x-slot>
 
@@ -20,36 +20,7 @@
 	<x-slot name="header">
 		<!--begin::Header Nav-->
 		<ul class="menu-nav">
-            <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                <a href="{{ route('dashboard') }}" class="menu-link">
-                    <span class="menu-text">{!! trans('commercial-home.nav-home') !!}</span>
-                </a>
-            </li>
-            <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                <a href="{{ route('shop.index') }}" class="menu-link">
-                    <span class="menu-text">{!! trans('commercial-home.nav-shop') !!}</span>
-                </a>
-            </li>
-            <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                <a href="{{ route('tickets.index') }}" class="menu-link">
-                    <span class="menu-text">{!! trans('commercial-home.nav-tickets') !!}</span>
-                </a>
-            </li>
-            <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                <a href="{{ route('technicians.index') }}" class="menu-link">
-                    <span class="menu-text">{!! trans('commercial-home.nav-technicians') !!}</span>
-                </a>
-            </li>
-            <li class="menu-item menu-item-active" aria-haspopup="true">
-                <a href="{{ route('agencies.index') }}" class="menu-link">
-                    <span class="menu-text">{!! trans('commercial-home.nav-agencies') !!}</span>
-                </a>
-            </li>
-            <li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
-                <a href="{{ route('preventive.interventions.index') }}" class="menu-link">
-                    <span class="menu-text">{!! trans('commercial-home.nav-preventive-interventions') !!}</span>
-                </a>
-            </li>
+            @include('components.header-administrator')
         </ul>
 		<!--end::Header Nav-->
 	</x-slot>
@@ -77,10 +48,10 @@
 			<div class="d-flex align-items-baseline flex-wrap mr-5">
 				<!--begin::Page Title-->
 				<h5 class="text-dark font-weight-bold my-1 mr-5">
-                    @if(Route::currentRouteName() == 'bank.create')
-                        {{ __('Add New Bank') }}
-                    @elseif(Route::currentRouteName() == 'bank.edit')
-                        {{ __('Edit Bank') }}
+                    @if(Route::currentRouteName() == 'tag.create')
+                        {{ __('Add New Tag') }}
+                    @elseif(Route::currentRouteName() == 'tag.edit')
+                        {{ __('Edit Tag') }}
                     @endif
                 </h5>
 				<!--end::Page Title-->
@@ -88,18 +59,18 @@
 				<!--begin::Breadcrumb-->
 				<ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('agencies.index') }}" class="text-muted">{{ __('Agencies') }}</a>
+                        <a href="{{ route('city.index') }}" class="text-muted">{{ __('Cities') }}</a>
                     </li>
 
                     <li class="breadcrumb-item text-muted">
-                        <a href="{{ route('banks.index') }}" class="text-muted">{{ __('Banks') }}</a>
+                        <a href="{{ route('tag.index') }}" class="text-muted">{{ __('Countries') }}</a>
                     </li>
 
 					<li class="breadcrumb-item text-muted">
-                        @if(Route::currentRouteName() == 'bank.create')
-                            <a href="#" class="text-muted">{{ __('Adding a new Bank') }}</a>
-                        @elseif(Route::currentRouteName() == 'bank.edit')
-                            <a href="#" class="text-muted">{{ __('Updating a Bank') }}</a>
+                        @if(Route::currentRouteName() == 'tag.create')
+                            <a href="#" class="text-muted">{{ __('Adding a new Tag') }}</a>
+                        @elseif(Route::currentRouteName() == 'tag.edit')
+                            <a href="#" class="text-muted">{{ __('Updating a Tag') }}</a>
                         @endif
                     </li>
 				</ul>
@@ -125,7 +96,7 @@
 						</svg>
                         <!--end::Svg Icon-->
 					</span>
-                    {{ __('Import New Banks') }}
+                    {{ __('Import New Tags') }}
                 </a>
             </div>
 			<!--end::Dropdown-->
@@ -138,19 +109,19 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
-                            {{ __('Import New Banks') }}
+                            {{ __('Import New Countries') }}
                         </h5>
                         <button type="button" class="btn btn-light btn-text-danger btn-hover-text-danger font-weight-bold" data-dismiss="modal" aria-label="Close">
                             {{ __('dashboard.close') }}
                         </button>
                     </div>
                     <div class="modal-body mx-5">
-                        <form method="POST" action="{{ route('bank.upload.import.members') }}" id="importBanks" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('tag.upload.import.members') }}" id="importBanks" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">
                                 <label class="font-size-h6 font-weight-bold mb-4">Import Members Model</label>
-                                <a href="{{ route('bank.download.import.members') }}" type="button" class="btn btn-light-primary btn-lg py-8 btn-block">
+                                <a href="{{ route('tag.download.import.members') }}" type="button" class="btn btn-light-primary btn-lg py-8 btn-block">
                                     <span class="svg-icon svg-icon-md">
                                         <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/keen/releases/2021-04-21-040700/theme/demo6/dist/../src/media/svg/icons/Files/File-plus.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -167,7 +138,7 @@
 
                                 <p class="form-text text-muted py-2">
                                     <span class="font-weight-bolder text-info">INFORMATION :</span>
-                                    {!! trans('You must Import this .csv file in the following format: <code class="font-size-sm">name;</code>. It will help you to facilitate the import of new banks of the organization.') !!}
+                                    {!! trans('You must Import this .csv file in the following format: <code class="font-size-sm">name;</code>. It will help you to facilitate the import of new countries of the organization.') !!}
                                 </p>
                             </div>
 
@@ -228,9 +199,9 @@
                 <x-alert-info class="mb-4" :message="$message" />
             @endif
 
-            @if(Route::currentRouteName() == 'bank.create')
+            @if(Route::currentRouteName() == 'tag.create')
                 <!--begin::Form-->
-                <form method="POST" action="{{ route('bank.store') }}">
+                <form method="POST" action="{{ route('tag.store') }}">
                     @csrf
 
                     <!--begin::Card - HEADER-->
@@ -238,8 +209,8 @@
                         <!--begin::Header-->
                         <div class="card-header py-3">
                             <div class="card-title align-items-start flex-column">
-                                <h3 class="card-label font-weight-bolder text-dark">{{ __('Bank Information') }}</h3>
-                                <span class="text-muted font-weight-bold font-size-sm mt-1">{{ __('Add Settings for this Bank') }}</span>
+                                <h3 class="card-label font-weight-bolder text-dark">{{ __('Tag Information') }}</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1">{{ __('Add Settings for this Tag') }}</span>
                             </div>
 
                             <div class="card-toolbar">
@@ -256,7 +227,7 @@
                                         <!--end::Svg Icon-->
                                 </span>
                                 </button>
-                                <a href="{{ route("banks.index") }}" class="btn btn-light-primary font-weight-bolder" tabindex="8">{{ __('user.reset') }}</a>
+                                <a href="{{ route("tag.index") }}" class="btn btn-light-primary font-weight-bolder" tabindex="8">{{ __('user.reset') }}</a>
                             </div>
                         </div>
                         <!--end::Header-->
@@ -276,22 +247,22 @@
                                 </div>
                                 <!--begin::Heading-->
 
-                                <!--begin::Form Group-->
+                                <!--begin::Form Group $name-->
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">{{ __('Bank Designation') }} <span class="text-danger">*</span></label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label">{{ __('Tag Name') }} <span class="text-danger">*</span></label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <input
                                                 type="text"
                                                 class="form-control form-control-lg form-control-solid"
-                                                name="designation"
-                                                placeholder="{{ __('Please enter a designation') }}"
+                                                name="name"
+                                                placeholder="{{ __('Please enter a name') }}"
                                                 required
-                                                title="Please enter a valid designation"
-                                                value="{{ old('designation') }}"
+                                                title="Please enter a valid name"
+                                                value="{{ old('name') }}"
                                             />
                                         </div>
-                                        <span class="form-text text-muted">{{ __('This Designation will be publicly displayed.')}}</span>
+                                        <span class="form-text text-muted">{{ __('This Name will be publicly displayed.')}}</span>
                                     </div>
                                 </div>
                             </div>
@@ -300,9 +271,9 @@
                     <!--end::Card-->
                 </form>
                 <!--end::Form-->
-            @elseif(Route::currentRouteName() == 'bank.edit')
+            @elseif(Route::currentRouteName() == 'tag.edit')
                 <!--begin::Form-->
-                <form method="POST" action="{{ route('bank.update', ['id' => $bank->id]) }}">
+                <form method="POST" action="{{ route('tag.update', ['slug' => $tag->slug]) }}">
                     @method('PUT')
                     @csrf
 
@@ -311,8 +282,8 @@
                         <!--begin::Header-->
                         <div class="card-header py-3">
                             <div class="card-title align-items-start flex-column">
-                                <h3 class="card-label font-weight-bolder text-dark">{{ __('Bank Information') }}</h3>
-                                <span class="text-muted font-weight-bold font-size-sm mt-1">{{ __('Add Settings for this Bank') }}</span>
+                                <h3 class="card-label font-weight-bolder text-dark">{{ __('Tag Information') }}</h3>
+                                <span class="text-muted font-weight-bold font-size-sm mt-1">{{ __('Add Settings for this Tag') }}</span>
                             </div>
 
                             <div class="card-toolbar">
@@ -329,7 +300,7 @@
                                         <!--end::Svg Icon-->
                             </span>
                                 </button>
-                                <a href="{{ route("banks.index") }}" class="btn btn-light-primary font-weight-bolder" tabindex="8">{{ __('user.reset') }}</a>
+                                <a href="{{ route("tag.index") }}" class="btn btn-light-primary font-weight-bolder" tabindex="8">{{ __('user.reset') }}</a>
                             </div>
                         </div>
                         <!--end::Header-->
@@ -349,19 +320,19 @@
                                 </div>
                                 <!--begin::Heading-->
 
-                                <!--begin::Form Group-->
+                                <!--begin::Form Group $name-->
                                 <div class="form-group row">
-                                    <label class="col-xl-3 col-lg-3 col-form-label">{{ __('Bank Designation') }} <span class="text-danger">*</span></label>
+                                    <label class="col-xl-3 col-lg-3 col-form-label">{{ __('Tag Name') }} <span class="text-danger">*</span></label>
                                     <div class="col-lg-9 col-xl-6">
                                         <div class="input-group input-group-lg input-group-solid">
                                             <input
                                                 type="text"
                                                 class="form-control form-control-lg form-control-solid"
-                                                name="designation"
-                                                placeholder="{{ __('Please enter a designation') }}"
+                                                name="name"
+                                                placeholder="{{ __('Please enter a name') }}"
                                                 required
-                                                title="Please enter a valid designation"
-                                                value="{{ old('designation', $bank->name) }}"
+                                                title="Please enter a valid name"
+                                                value="{{ old('name', $tag->name) }}"
                                             />
                                         </div>
                                         <span class="form-text text-muted">{{ __('This Designation will be publicly displayed.')}}</span>
@@ -372,7 +343,7 @@
                     </div>
                     <!--end::Card-->
 
-                    @if($bank->agencies)
+                    @if($tag->events)
                         <!--begin::Card-->
                         <div class="card card-custom gutter-b">
                                 <div class="form">
@@ -381,30 +352,88 @@
                                         <div class="row">
                                             <label class="col-xl-3"></label>
                                             <div class="col-lg-9 col-xl-6">
-                                                <h5 class="font-weight-bold mb-6">{{ __('Agencies belonging to this bank.') }}</h5>
+                                                <h5 class="font-weight-bold mb-6">{{ __('Events belonging to this tag.') }}</h5>
                                             </div>
                                         </div>
                                         <!--begin::Heading-->
 
                                         <div class="row">
-                                            <label class="col-xl-3">{!! trans('List of Agencies') !!}</label>
+                                            <label class="col-xl-3">{!! trans('List of Events') !!}</label>
                                             <div class="col-lg-9 col-xl-6">
                                                 <table class="table table-bordered">
                                                     <thead>
                                                     <tr class="table-active">
-                                                        <th scope="col" class="pl-5">{!! trans('Region') !!}</th>
-                                                        <th scope="col" class="pl-5">{!! trans('Agency Designation') !!}</th>
+                                                        {{--<th scope="col" class="pl-5">{!! trans('Region') !!}</th>--}}
+                                                        <th scope="col" class="pl-5">{!! trans('Event Title') !!}</th>
                                                         <th scope="col" class="pl-5 w-40px"></th>
                                                     </tr>
                                                     </thead>
 
                                                     <tbody>
-                                                    @foreach($bank->agencies as $agency)
+                                                    @foreach($tag->events as $event)
                                                         <tr>
-                                                            <td class="pl-5 text-muted font-weight-bold bg-gray-100 align-middle">{{ strtoupper($agency->region->designation) }}</td>
-                                                            <th scope="row" class="pl-5 align-middle">{{ ucfirst($agency->designation) }}</th>
+                                                            {{--<td class="pl-5 text-muted font-weight-bold bg-gray-100 align-middle">{{ strtoupper($event->region->name) }}</td>--}}
+                                                            <th scope="row" class="pl-5 align-middle">{{ ucfirst($event->title) }}</th>
                                                             <td class="align-middle">
-                                                                <a href="{{ route('agency.edit', ['id' => $agency->id]) }}" class="btn btn-icon btn-light-primary m-1">
+                                                                <a href="{{ route('city.edit', ['slug' => $event->slug]) }}" class="btn btn-icon btn-light-primary m-1">
+                                                                    <span class="svg-icon svg-icon-lg">
+                                                                        <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/keen/releases/2021-04-21-040700/theme/demo6/dist/../src/media/svg/icons/Communication/Write.svg-->
+                                                                        <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
+                                                                            <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+                                                                                <rect x="0" y="0" width="24" height="24"/>
+                                                                                <path d="M12.2674799,18.2323597 L12.0084872,5.45852451 C12.0004303,5.06114792 12.1504154,4.6768183 12.4255037,4.38993949 L15.0030167,1.70195304 L17.5910752,4.40093695 C17.8599071,4.6812911 18.0095067,5.05499603 18.0083938,5.44341307 L17.9718262,18.2062508 C17.9694575,19.0329966 17.2985816,19.701953 16.4718324,19.701953 L13.7671717,19.701953 C12.9505952,19.701953 12.2840328,19.0487684 12.2674799,18.2323597 Z" fill="#000000" fill-rule="nonzero" transform="translate(14.701953, 10.701953) rotate(-135.000000) translate(-14.701953, -10.701953) "/>
+                                                                                <path d="M12.9,2 C13.4522847,2 13.9,2.44771525 13.9,3 C13.9,3.55228475 13.4522847,4 12.9,4 L6,4 C4.8954305,4 4,4.8954305 4,6 L4,18 C4,19.1045695 4.8954305,20 6,20 L18,20 C19.1045695,20 20,19.1045695 20,18 L20,13 C20,12.4477153 20.4477153,12 21,12 C21.5522847,12 22,12.4477153 22,13 L22,18 C22,20.209139 20.209139,22 18,22 L6,22 C3.790861,22 2,20.209139 2,18 L2,6 C2,3.790861 3.790861,2 6,2 L12.9,2 Z" fill="#000000" fill-rule="nonzero" opacity="0.3"/>
+                                                                            </g>
+                                                                        </svg>
+                                                                        <!--end::Svg Icon-->
+                                                                    </span>
+                                                                </a>
+                                                            </td>
+                                                        </tr>
+                                                    @endforeach
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        <!--end::Card-->
+                    @endif
+
+                    @if($tag->posts)
+                        <!--begin::Card-->
+                            <div class="card card-custom gutter-b">
+                                <div class="form">
+                                    <div class="card-body">
+                                        <!--begin::Heading-->
+                                        <div class="row">
+                                            <label class="col-xl-3"></label>
+                                            <div class="col-lg-9 col-xl-6">
+                                                <h5 class="font-weight-bold mb-6">{{ __('Posts belonging to this tag.') }}</h5>
+                                            </div>
+                                        </div>
+                                        <!--begin::Heading-->
+
+                                        <div class="row">
+                                            <label class="col-xl-3">{!! trans('List of Posts') !!}</label>
+                                            <div class="col-lg-9 col-xl-6">
+                                                <table class="table table-bordered">
+                                                    <thead>
+                                                    <tr class="table-active">
+                                                        {{--<th scope="col" class="pl-5">{!! trans('Region') !!}</th>--}}
+                                                        <th scope="col" class="pl-5">{!! trans('Post Title') !!}</th>
+                                                        <th scope="col" class="pl-5 w-40px"></th>
+                                                    </tr>
+                                                    </thead>
+
+                                                    <tbody>
+                                                    @foreach($tag->posts as $post)
+                                                        <tr>
+                                                            {{--<td class="pl-5 text-muted font-weight-bold bg-gray-100 align-middle">{{ strtoupper($post->region->name) }}</td>--}}
+                                                            <th scope="row" class="pl-5 align-middle">{{ ucfirst($post->title) }}</th>
+                                                            <td class="align-middle">
+                                                                <a href="{{ route('city.edit', ['slug' => $post->slug]) }}" class="btn btn-icon btn-light-primary m-1">
                                                                     <span class="svg-icon svg-icon-lg">
                                                                         <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/keen/releases/2021-04-21-040700/theme/demo6/dist/../src/media/svg/icons/Communication/Write.svg-->
                                                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -470,7 +499,7 @@
                                                 type="text"
                                                 class="form-control form-control-lg form-control-solid"
                                                 disabled
-                                                value="{{ Carbon\Carbon::parse(intval(substr($bank->createdAt, 0, 10)))->format("d/m/Y H:i") }}"
+                                                value="{{ $tag->created_at->format("d/m/Y H:i") }}"
                                             />
 
                                             <div class="input-group-append">
@@ -495,15 +524,15 @@
                                     </div>
                                 </div>
 
-                            @if ($bank->deletedAt)
+                            @if ($tag->deleted_at)
                                 <!--begin::Form Group-->
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label"></label>
                                     <div class="col-lg-9 col-xl-9">
-                                        <a href="{{ route('bank.enable.id', ['id' => $bank->id, 'name' => $bank->name]) }}" onclick="return confirm('{{ __('Are you sure you want to enable this Bank ?') }}')" type="button" class="btn btn-light-primary font-weight-bold btn-sm">{{ __('Enable this Bank?') }}</a>
+                                        <a href="{{ route('tag.enable.id', ['slug' => $tag->slug, 'name' => $tag->name]) }}" onclick="return confirm('{{ __('Are you sure you want to enable this Tag ?') }}')" type="button" class="btn btn-light-primary font-weight-bold btn-sm">{{ __('Enable this Tag?') }}</a>
                                         <p class="form-text text-muted py-2">
                                             <span class="font-weight-bolder text-danger">IMPORTANT :</span>
-                                            {!! trans('This Bank has been inactive since <code class="font-size-sm">:deletedAt</code>. If it is useful, you can enable it.', ['deletedAt' => Carbon\Carbon::parse(intval(substr($bank->deletedAt, 0, 10)))->format("d/m/Y H:i")]) !!}
+                                            {!! trans('This Tag has been inactive since <code class="font-size-sm">:deleted_at</code>. If it is useful, you can enable it.', ['deleted_at' => Carbon\Carbon::parse(intval(substr($tag->deleted_at, 0, 10)))->format("d/m/Y H:i")]) !!}
                                         </p>
                                     </div>
                                 </div>
@@ -512,10 +541,10 @@
                                 <div class="form-group row">
                                     <label class="col-xl-3 col-lg-3 col-form-label"></label>
                                     <div class="col-lg-9 col-xl-9">
-                                        <a href="{{ route('bank.disable.id', ['id' => $bank->id, 'name' => $bank->name]) }}" onclick="return confirm('{{ __('Are you sure you want to close this Bank ?') }}')" type="button" class="btn btn-light-info font-weight-bold btn-sm">{{ __('Disable this Bank?') }}</a>
+                                        <a href="{{ route('tag.disable.id', ['slug' => $tag->slug, 'name' => $tag->name]) }}" onclick="return confirm('{{ __('Are you sure you want to close this Tag ?') }}')" type="button" class="btn btn-light-info font-weight-bold btn-sm">{{ __('Disable this Tag?') }}</a>
                                         <p class="form-text text-muted py-2">
                                             <span class="font-weight-bolder text-danger">IMPORTANT :</span>
-                                            {!! trans('If you choose to disable this bank, it will no longer be usable in your operations.') !!}
+                                            {!! trans('If you choose to disable this Tag, it will no longer be usable in your operations.') !!}
                                         </p>
                                     </div>
                                 </div>
@@ -532,4 +561,4 @@
     </div>
 	<!--end::Profile Account Information-->
 
-</x-dashboard-commercial>
+</x-dashboard-administrator>

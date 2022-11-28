@@ -1,0 +1,24 @@
+runtime: php74
+#}env: flex
+#api_version: 1
+
+runtime_config:
+  document_root: public
+
+env_variables:
+  APP_NAME: Vzit
+  APP_ENv: production
+  APP_KEY: base64:s6yUSO68etDkcaEXGNuu1j6JIPp/Hbn++Pf6KaQ6ylY=
+  APP_DEBUG: true
+  STORAGE_DIR: /tmp
+  DB_CONNECTION: pgsql
+  DB_HOST: 127.0.0.1
+  DB_PORT: 5432
+  DB_DATABASE: vzit
+  DB_USERNAME: postgres
+  DB_PASSWORD: $l1mh+\Ly\2Bfb*x
+  DB_SOCKET: /cloudsql/lateral-academy-348811:europe-west1:vzit-postgres
+
+beta_settings:
+  cloud_sql_instances: lateral-academy-348811:europe-west1:vzit-postgres
+

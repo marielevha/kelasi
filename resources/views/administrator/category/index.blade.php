@@ -1,7 +1,7 @@
 <x-dashboard-administrator>
 
 	<x-slot name="title">
-		{{ __('List Of Banks') }}
+		{{ __('List Of Categories') }}
 	</x-slot>
 
 	<x-slot name="local_link">
@@ -51,12 +51,12 @@
 			<!--begin::Page Heading-->
 			<div class="d-flex align-items-baseline flex-wrap mr-5">
 				<!--begin::Page Title-->
-				<h5 class="text-dark font-weight-bold my-1 mr-5">{!! trans('List Of Banks') !!}</h5>
+				<h5 class="text-dark font-weight-bold my-1 mr-5">{!! trans('List Of Categories') !!}</h5>
 				<!--begin::Breadcrumb-->
                 <!--end::Page Title-->
                 <ul class="breadcrumb breadcrumb-transparent breadcrumb-dot font-weight-bold p-0 my-2 font-size-sm">
 					<li class="breadcrumb-item text-muted">
-						<a href="#" class="text-muted">{!! trans('List Of Organization Banks') !!}</a>
+						<a href="#" class="text-muted">{!! trans('List Of Organization Categories') !!}</a>
 					</li>
 				</ul>
 				<!--end::Breadcrumb-->
@@ -68,7 +68,7 @@
         <!--begin::Toolbar-->
         <div class="d-flex align-items-center flex-wrap">
             <!--begin::Dropdown-->
-            <div class="dropdown dropdown-inline" data-toggle="tooltip" title="{{ __('Banks Actions') }}"
+            <div class="dropdown dropdown-inline" data-toggle="tooltip" title="{{ __('Categories Actions') }}"
                  data-placement="top">
                 <a href="#" class="btn btn-light-primary font-weight-bolder px-5 mr-3 my-1"
                    data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -91,18 +91,12 @@
                     <!--begin::Navigation-->
                     <ul class="navi navi-hover">
                         <li class="navi-item">
-                            <a href="{{ route('country.create') }}" class="navi-link px-5 py-5 font-weight-bold">
-                                <span class="navi-text">{{ __('Add New Country') }}</span>
+                            <a href="{{ route('category.create') }}" class="navi-link px-5 py-5 font-weight-bold">
+                                <span class="navi-text">{{ __('Add New Tag') }}</span>
                             </a>
                         </li>
 
                         <div class="separator separator-dashed"></div>
-
-                        <li class="navi-item">
-                            <a href="{{ route('city.index') }}" class="navi-link px-5 py-5 font-weight-bold">
-                                <span class="navi-text text-danger">{{ __('Back to Cities') }}</span>
-                            </a>
-                        </li>
                     </ul>
                     <!--end::Navigation-->
                 </div>
@@ -111,7 +105,7 @@
 
             <!--begin::Dropdown-->
             <div class="dropdown dropdown-inline" data-toggle="tooltip" title="{{ __('Import an .csv file of the following format: name;') }}" data-placement="bottom">
-                <a href="#" class="btn btn-light-info font-weight-bolder px-5 px-5 my-1" data-toggle="modal" data-target="#modalImportNewBanks">
+                <a href="#" class="btn btn-light-info font-weight-bolder px-5 px-5 my-1" data-toggle="modal" data-target="#modalImportNewCategories">
 					<span class="svg-icon svg-icon-md">
 						<!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/keen/releases/2021-04-21-040700/theme/demo6/dist/../src/media/svg/icons/Files/File-plus.svg-->
 						<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -124,7 +118,7 @@
                         <!--end::Svg Icon-->
 					</span>
 
-                    {{ __('Import New Banks') }}
+                    {{ __('Import New Categories') }}
                 </a>
             </div>
             <!--end::Dropdown-->
@@ -132,24 +126,24 @@
         <!--end::Toolbar-->
 
         <!-- Modal-->
-        <div class="modal fade" id="modalImportNewBanks" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
+        <div class="modal fade" id="modalImportNewCategories" tabindex="-1" role="dialog" aria-labelledby="staticBackdrop" aria-hidden="true">
             <div class="modal-dialog modal-lg" role="document">
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
-                            {{ __('Import New city') }}
+                            {{ __('Import New Category') }}
                         </h5>
                         <button type="button" class="btn btn-light btn-text-danger btn-hover-text-danger font-weight-bold" data-dismiss="modal" aria-label="Close">
                             {{ __('dashboard.close') }}
                         </button>
                     </div>
                     <div class="modal-body mx-5">
-                        <form method="POST" action="{{ route('country.upload.import.members') }}" id="importBanks" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('category.upload.import.members') }}" id="importCategories" enctype="multipart/form-data">
                             @csrf
 
                             <div class="form-group">
                                 <label class="font-size-h6 font-weight-bold mb-4">Import Members Model</label>
-                                <a href="{{ route('country.download.import.members') }}" type="button" class="btn btn-light-primary btn-lg py-8 btn-block">
+                                <a href="{{ route('category.download.import.members') }}" type="button" class="btn btn-light-primary btn-lg py-8 btn-block">
                                     <span class="svg-icon svg-icon-md">
                                         <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/keen/releases/2021-04-21-040700/theme/demo6/dist/../src/media/svg/icons/Files/File-plus.svg-->
                                         <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -194,7 +188,7 @@
                                     </div>
 
                                     <div class="custom-file">
-                                        <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="importMember" accept="text/csv" onchange="document.getElementById('importBanks').submit();">
+                                        <input type="file" class="custom-file-input " id="inputGroupFile01" aria-describedby="inputGroupFileAddon01" name="importMember" accept="text/csv" onchange="document.getElementById('importCategories').submit();">
                                         <label class="custom-file-label" for="inputGroupFile01">{!! trans('Choose File') !!}</label>
                                     </div>
                                 </div>
@@ -226,15 +220,15 @@
     <div class="card card-custom gutter-b">
         <div class="card-header">
             <div class="card-title">
-                <span class="card-label font-weight-bolder font-size-h4 text-dark-75">{{ __('List Of Countries') }} <span class="text-muted ml-3 font-weight-bold font-size-lg">{{ trans('user.total_users', ['number' => count($listOfCountries)]) }}</span></span>
+                <span class="card-label font-weight-bolder font-size-h4 text-dark-75">{{ __('List Of Categories') }} <span class="text-muted ml-3 font-weight-bold font-size-lg">{{ trans('user.total_users', ['number' => count($listOfCategories)]) }}</span></span>
             </div>
             <div class="card-toolbar">
                 <ul class="nav nav-bold nav-pills nav-pills-sm nav-dark">
-                    <li class="nav-item" data-toggle="tooltip" title="{{ __('List Of All Enabled Countries') }}" data-placement="left">
-                        <a class="nav-link py-2 px-4 active font-weight-bolder font-size-md" data-toggle="tab" href="#kt_tab_table_4_3">{{ __('Enabled Countries') }}</a>
+                    <li class="nav-item" data-toggle="tooltip" title="{{ __('List Of All Enabled Categories') }}" data-placement="left">
+                        <a class="nav-link py-2 px-4 active font-weight-bolder font-size-md" data-toggle="tab" href="#kt_tab_table_4_3">{{ __('Enabled Categories') }}</a>
                     </li>
 
-                    <li class="nav-item ml-2" data-toggle="tooltip" title="{{ __('List Of Disabled Countries') }}" data-placement="right">
+                    <li class="nav-item ml-2" data-toggle="tooltip" title="{{ __('List Of Disabled Categories') }}" data-placement="right">
                         <a class="nav-link py-2 px-4 font-weight-bolder font-size-md" data-toggle="tab" href="#kt_tab_table_4_0">
 							<span class="svg-icon svg-icon-md">
 								<!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/keen/releases/2021-04-21-040700/theme/demo6/dist/../src/media/svg/icons/Home/Trash.svg-->
@@ -270,12 +264,13 @@
                                     <th class="p-0 min-w-120px"></th>
                                     <th class="p-0 min-w-150px"></th>
                                     <th class="p-0 min-w-100px"></th>
+                                    <th class="p-0 min-w-100px"></th>
                                     <th class="p-0 min-w-150px"></th>
                                     <th class="p-0 w-80px"></th>
                                 </tr>
                             </thead>
                             <tbody>
-                            @forelse($listOfCountries as $member)
+                            @forelse($listOfCategories as $member)
                                 <tr>
                                     <td class="pl-3 py-5">
                                         <div class="symbol symbol-45 symbol-light-success mr-2">
@@ -286,15 +281,20 @@
                                     </td>
 
                                     <td class="pl-0">
-                                        <span class="text-muted font-weight-bold d-block">{{ __('Name') }}</span>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ strtoupper($member->name) }}</span>
+                                        <span class="text-muted font-weight-bold d-block">{{ __('Title') }}</span>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ strtoupper($member->title) }}</span>
                                     </td>
 
                                     <td class=""></td>
 
                                     <td class="text-right">
-                                        <span class="text-muted font-weight-bold d-block">{{ __('Number of Cities') }}</span>
-                                        <span class="text-dark-75 font-weight-bold d-block font-size-lg">{!! trans('commercial-agencies.td-number-agencies', ['number' => count($member->cities)]) !!}</span>
+                                        <span class="text-muted font-weight-bold d-block">{{ __('Number of Events') }}</span>
+                                        <span class="text-dark-75 font-weight-bold d-block font-size-lg">{!! trans('category.td-number-events', ['number' => count($member->events)]) !!}</span>
+                                    </td>
+
+                                    <td class="text-right">
+                                        <span class="text-muted font-weight-bold d-block">{{ __('Number of Posts') }}</span>
+                                        <span class="text-dark-75 font-weight-bold d-block font-size-lg">{!! trans('category.td-number-posts', ['number' => count($member->posts)]) !!}</span>
                                     </td>
 
                                     <td class="text-right">
@@ -307,7 +307,7 @@
                                     </td>
 
                                     <td class="text-right pr-2">
-                                        <a href="{{ route('country.edit', ['slug' => $member->slug]) }}" class="btn btn-icon btn-light-primary m-1">
+                                        <a href="{{ route('category.edit', ['slug' => $member->slug]) }}" class="btn btn-icon btn-light-primary m-1">
                                             <span class="svg-icon svg-icon-lg">
                                                 <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/keen/releases/2021-04-21-040700/theme/demo6/dist/../src/media/svg/icons/Communication/Write.svg-->
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -321,7 +321,7 @@
                                             </span>
                                         </a>
 
-                                        <a href="{{ route('country.disable.id', ['slug' => $member->slug, 'name' => $member->name]) }}" onclick="return confirm('{{ __('validation.are-you-sure-bank') }}')" class="btn btn-icon btn-light-danger m-1">
+                                        <a href="{{ route('category.disable.id', ['slug' => $member->slug, 'title' => $member->title]) }}" onclick="return confirm('{{ __('validation.are-you-sure-bank') }}')" class="btn btn-icon btn-light-danger m-1">
                                             <span class="svg-icon svg-icon-lg">
                                                 <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/keen/releases/2021-04-21-040700/theme/demo6/dist/../src/media/svg/icons/Home/Trash.svg-->
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
@@ -359,12 +359,13 @@
                                 <th class="p-0 min-w-120px"></th>
                                 <th class="p-0 min-w-100px"></th>
                                 <th class="p-0 min-w-100px"></th>
+                                <th class="p-0 min-w-100px"></th>
                                 <th class="p-0 min-w-150px"></th>
                                 <th class="p-0 w-80px"></th>
                             </tr>
                             </thead>
                             <tbody>
-                            @forelse ($listOfDisabledCountries as $member)
+                            @forelse ($listOfDisabledCategories as $member)
                                 <tr>
                                     <td class="pl-3 py-5">
                                         <div class="symbol symbol-45 symbol-light-success mr-2">
@@ -375,20 +376,25 @@
                                     </td>
 
                                     <td class="pl-0">
-                                        <span class="text-muted font-weight-bold d-block">{{ __('Designation') }}</span>
-                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ strtoupper($member->name) }}</span>
+                                        <span class="text-muted font-weight-bold d-block">{{ __('Title') }}</span>
+                                        <span class="text-dark-75 font-weight-bolder d-block font-size-lg">{{ strtoupper($member->title) }}</span>
                                     </td>
 
                                     <td class=""></td>
 
                                     <td class="text-right">
-                                        <span class="text-muted font-weight-bold d-block">{{ __('Number of Cities') }}</span>
-                                        <span class="text-dark-75 font-weight-bold d-block font-size-lg">{!! trans('commercial-agencies.td-number-agencies', ['number' => count($member->cities)]) !!}</span>
+                                        <span class="text-muted font-weight-bold d-block">{{ __('Number of Events') }}</span>
+                                        <span class="text-dark-75 font-weight-bold d-block font-size-lg">{!! trans('category.td-number-events', ['number' => count($member->events)]) !!}</span>
+                                    </td>
+
+                                    <td class="text-right">
+                                        <span class="text-muted font-weight-bold d-block">{{ __('Number of Posts') }}</span>
+                                        <span class="text-dark-75 font-weight-bold d-block font-size-lg">{!! trans('category.td-number-posts', ['number' => count($member->posts)]) !!}</span>
                                     </td>
 
                                     <td class="text-right">
                                         <span class="text-muted font-weight-bold d-block">{{ __('Disabled At') }}</span>
-                                        <span class="text-dark-65 font-weight-bold">{{ Carbon\Carbon::parse(intval(substr($member->deletedAt, 0, 10)))->format("d/m/Y H:i") }}</span>
+                                        <span class="text-dark-65 font-weight-bold">{{ $member->deleted_at->format("d/m/Y H:i") }}</span>
                                     </td>
 
                                     <td class="text-right pr-5">
@@ -396,7 +402,7 @@
                                     </td>
 
                                     <td class="text-right pr-2">
-                                        <a href="{{ route('country.edit', ['slug' => $member->slug]) }}" class="btn btn-icon btn-light-primary m-1">
+                                        <a href="{{ route('category.edit', ['slug' => $member->slug]) }}" class="btn btn-icon btn-light-primary m-1">
                                             <span class="svg-icon svg-icon-lg">
                                                 <!--begin::Svg Icon | path:/var/www/preview.keenthemes.com/keen/releases/2021-04-21-040700/theme/demo6/dist/../src/media/svg/icons/Communication/Write.svg-->
                                                 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">

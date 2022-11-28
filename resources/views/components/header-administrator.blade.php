@@ -23,6 +23,16 @@
         <span class="menu-text">{!! trans('header-menu.menu-city') !!}</span>
     </a>
 </li>
+<li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
+    <a href="{{ route('category.index') }}" class="menu-link">
+        <span class="menu-text">{!! trans('header-menu.menu-category') !!}</span>
+    </a>
+</li>
+<li class="menu-item menu-item-active" aria-haspopup="true">
+    <a href="{{ route('tag.index') }}" class="menu-link">
+        <span class="menu-text">{!! trans('header-menu.menu-tag') !!}</span>
+    </a>
+</li>
 {{--<li class="menu-item menu-item-submenu menu-item-rel" aria-haspopup="true">
     <a href="{{ route('pack.index') }}" class="menu-link">
         <span class="menu-text">{!! trans('header-menu.menu-pack') !!}</span>

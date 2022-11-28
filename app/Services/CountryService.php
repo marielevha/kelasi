@@ -62,4 +62,14 @@ class CountryService
             'slug' => Str::slug($data->name, '-'),
         ]);
     }
+
+    public function disable_country_by_slug($slug)
+    {
+        return Country::where('slug', $slug)->first()->delete();
+    }
+
+    public function enable_country_by_slug($slug)
+    {
+        return Country::withTrashed()->where('slug', $slug)->first()->restore();
+    }
 }

@@ -9,15 +9,19 @@
 namespace App\Services;
 
 
+use App\Models\Vzit\Post;
+
 class PostService
 {
     public function posts()
     {
-        return [];
+        return Post::withTrashed()
+            ->where('deleted_at', null)
+            ->get();
     }
     public function get_all_deleted_tickets()
     {
-        return [];
+        return Post::onlyTrashed()->get();
     }
     public function get_all_tickets_by_status()
     {
